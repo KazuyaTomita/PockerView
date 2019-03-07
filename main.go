@@ -1,27 +1,34 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
-	"io"
 	"os/exec"
+	"time"
 )
 
 func main() {
-	//
-	var a int
-	fmt.Scan(&a)
-	fmt.Printf("%d\n",a )
-	//
-
-	cmd := exec.Command("wc")
+	cmd := exec.Command("go", "run", "dummy_engine.go")
+	stdout, _ := cmd.StdoutPipe()
 	stdin, _ := cmd.StdinPipe()
-	fmt.Printf("readしたよ")
-	io.WriteString(stdin, "hogehoge\\0")
-	stdin.Close()
-	fmt.Printf("closeしなかったよ")
-	//?out, _ := cmd.Output()
-	// fmt.Printf("結果: %s", out)
-	fmt.Printf("clofafafaf")
 
+	scanner := bufio.NewScanner(stdout)
+	var writer = bufio.NewWriter(stdin)
+
+	go func() {
+		for scanner.Scan() {
+			line := scanner.Text()
+			fmt.Println(line)
+		}
+	}()
+
+	go func() {
+		for i := 0; i < 10; i++ {
+			writer.WriteString("hoge\n")
+			writer.Flush()
+			time.Sleep(time.Second)
+		}
+	}()
+
+	cmd.Run()
 }
-
