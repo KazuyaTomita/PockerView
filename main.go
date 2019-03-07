@@ -3,40 +3,32 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"os"
 	"os/exec"
+	"time"
 )
 
-func readStuff(scanner *bufio.Scanner) {
-	for scanner.Scan() {
-		fmt.Println("Performed Scan")
-		fmt.Println(scanner.Text())
-	}
-	if err := scanner.Err(); err != nil {
-		fmt.Fprintln(os.Stderr, "reading standard input:", err)
-	}
-}
-
 func main() {
-	cmd := exec.Command("wc")
-	stdin, stdinErr := cmd.StdinPipe()
-	stdout, stdoutErr := cmd.StdoutPipe()
-	if stdinErr != nil || stdoutErr != nil {
-		panic("could not get stdin or stdout")
-	}
-	buffer := bufio.NewWriter(stdin)
-	buffer.WriteString("hoge\n")
-	err := cmd.Start()
-	buffer.Flush()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Failed to start err=%v", err)
-		os.Exit(1)
-	}
+	cmd := exec.Command("go", "run", "dummy_engine.go")
+	stdout, _ := cmd.StdoutPipe()
+	stdin, _ := cmd.StdinPipe()
 
 	scanner := bufio.NewScanner(stdout)
-	fmt.Println("Scanner created")
+	var writer = bufio.NewWriter(stdin)
 
-	defer cmd.Wait()
+	go func() {
+		for scanner.Scan() {
+			line := scanner.Text()
+			fmt.Println(line)
+		}
+	}()
 
-	go readStuff(scanner)
+	go func() {
+		for i := 0; i < 10; i++ {
+			writer.WriteString("hoge\n")
+			writer.Flush()
+			time.Sleep(time.Second)
+		}
+	}()
+
+	cmd.Run()
 }

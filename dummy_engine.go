@@ -1,32 +1,16 @@
 package main
 
 import (
+	"bufio"
+	"os"
 	"fmt"
-	"io"
-	"os/exec"
 )
 
 func main() {
-	cmd := exec.Command("sleep 5 && echo 'hoge'")
-	stdin, stdinErr := cmd.StdinPipe()
-	stdout, stdoutErr := cmd.StdoutPipe()
-	if stdinErr != nil || stdoutErr != nil {
-		panic("could not get stdin or stdout")
+	stdin := bufio.NewScanner(os.Stdin)
+	for stdin.Scan() {
+		line := stdin.Text()
+		fmt.Println(line)
 	}
-	fmt.Printf("write something\n" )
-	io.WriteString(stdin, "hogeaaaa ddd")
-	buffer := make([]byte,10)
-	fmt.Printf("read buffer\n" )
-	// text ,_ := stdout.Read(buffer)
-	io.ReadFull(stdout, buffer)
-	cmd.Start()
-	fmt.Printf("print text from the command\n" )
-	fmt.Printf("OUTPUT=%s", buffer[1])
-
-	//var a int
-	//fmt.Scan(&a)
-	//fmt.Printf("%d\n",a )
-	//exec.Command("ls", "-la").Run()
-	//
 }
 
