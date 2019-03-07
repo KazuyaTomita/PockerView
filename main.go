@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io"
 	"os"
 	"os/exec"
 )
@@ -25,9 +24,10 @@ func main() {
 	if stdinErr != nil || stdoutErr != nil {
 		panic("could not get stdin or stdout")
 	}
-	io.WriteString(stdin, "hogeaaaa ddd")
-	stdin.Close()
+	buffer := bufio.NewWriter(stdin)
+	buffer.WriteString("hoge\n")
 	err := cmd.Start()
+	buffer.Flush()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Failed to start err=%v", err)
 		os.Exit(1)
