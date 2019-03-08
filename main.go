@@ -3,36 +3,47 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"os"
 	"os/exec"
-	"time"
 )
 
 func main() {
+	stdin := bufio.NewScanner(os.Stdin)
+
+
 	cmd := exec.Command("go", "run", "dummy_engine.go")
-	stdout, stdoutErr := cmd.StdoutPipe()
-	stdin, stdinErr := cmd.StdinPipe()
+	stdoutPipe, stdoutErr := cmd.StdoutPipe()
+	stdinPipe, stdinErr := cmd.StdinPipe()
 
 	if stdinErr != nil || stdoutErr != nil {
-		panic("could not get stdin or stdout")
+		panic("could not get stdinPipe or stdoutPipe")
 	}
 
-	scanner := bufio.NewScanner(stdout)
-	var writer = bufio.NewWriter(stdin)
+	scanner := bufio.NewScanner(stdoutPipe)
+	var writer = bufio.NewWriter(stdinPipe)
 
-	go func() {
-		for scanner.Scan() {
-			line := scanner.Text()
-			fmt.Println(line)
-		}
-	}()
+	go printOutput(scanner)
 
-	go func() {
-		for i := 0; i < 10; i++ {
-			writer.WriteString("hoge\n")
-			writer.Flush()
-			time.Sleep(time.Second)
-		}
-	}()
+	go writeInput(stdin, writer)
 
 	cmd.Run()
+}
+
+// first argument is used to read input
+// second one is used to write the input
+func writeInput(scanner *bufio.Scanner, writer *bufio.Writer) {
+	for scanner.Scan() {
+		line := scanner.Text()
+		writer.WriteString(line)
+		writer.Flush()
+		fmt.Println(line)
+	}
+}
+
+// receive output and print it
+func printOutput(scanner *bufio.Scanner) {
+	for scanner.Scan() {
+		line := scanner.Text()
+		fmt.Println(line)
+	}
 }
