@@ -9,8 +9,12 @@ import (
 
 func main() {
 	cmd := exec.Command("go", "run", "dummy_engine.go")
-	stdout, _ := cmd.StdoutPipe()
-	stdin, _ := cmd.StdinPipe()
+	stdout, stdoutErr := cmd.StdoutPipe()
+	stdin, stdinErr := cmd.StdinPipe()
+
+	if stdinErr != nil || stdoutErr != nil {
+		panic("could not get stdin or stdout")
+	}
 
 	scanner := bufio.NewScanner(stdout)
 	var writer = bufio.NewWriter(stdin)
