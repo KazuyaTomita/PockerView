@@ -32,7 +32,6 @@ func main() {
 // second one is used to write the input
 func writeInput(scanner *bufio.Scanner, writer *bufio.Writer) {
 	for scanner.Scan() {
-		fmt.Println("writeInput")
 		line := scanner.Text()
 		writer.WriteString(line)
 		writer.WriteString("\n")
@@ -43,7 +42,6 @@ func writeInput(scanner *bufio.Scanner, writer *bufio.Writer) {
 // receive output and print it
 func printOutput(scanner *bufio.Scanner) {
 	for scanner.Scan() {
-		fmt.Println("printOutput")
 		line := scanner.Text()
 		fmt.Println(line)
 	}
