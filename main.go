@@ -34,8 +34,8 @@ func main() {
 		for stdin.Scan() {
 			fmt.Println("writeInput")
 			line := stdin.Text()
-			fmt.Println(line)
 			writer.WriteString(line)
+			writer.WriteString("\n")
 			writer.Flush()
 		}
 	}()
@@ -59,7 +59,6 @@ func printOutput(scanner *bufio.Scanner) {
 	for scanner.Scan() {
 		fmt.Println("printOutput")
 		line := scanner.Text()
-		fmt.Println(line)
 		fmt.Println(line)
 	}
 }
