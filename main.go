@@ -22,23 +22,8 @@ func main() {
 	scanner := bufio.NewScanner(stdoutPipe)
 	var writer = bufio.NewWriter(stdinPipe)
 
-	go func() {
-		for scanner.Scan() {
-			fmt.Println("printOutput")
-			line := scanner.Text()
-			fmt.Println(line)
-		}
-	}()
-
-	go func() {
-		for stdin.Scan() {
-			fmt.Println("writeInput")
-			line := stdin.Text()
-			writer.WriteString(line)
-			writer.WriteString("\n")
-			writer.Flush()
-		}
-	}()
+	go writeInput(stdin, writer)
+	go printOutput(scanner)
 
 	cmd.Run()
 }
@@ -50,6 +35,7 @@ func writeInput(scanner *bufio.Scanner, writer *bufio.Writer) {
 		fmt.Println("writeInput")
 		line := scanner.Text()
 		writer.WriteString(line)
+		writer.WriteString("\n")
 		writer.Flush()
 	}
 }
