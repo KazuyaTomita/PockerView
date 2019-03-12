@@ -6,13 +6,15 @@ import (
 	"os"
 	"os/exec"
 )
+
 /*
-We design a poker AI by using two components. The first one is a GUI program and the second one is a AI engine.
+We design a poker AI by using two components. Generally speaking, The first one is a GUI program and the second one is a AI engine.
 By doing so, we can separate interface parts and actual search or estimation parts. And this program is a GUI program.
+However, implementing GUI by Golang is not easy now. So, this program is just cli tool.
 We want to offer three types of interface.
 
-(i) CLI. In the cli, a user just types commands such as "is_ready" and then this GUI program passes it to an engine.
-After that, the engine executes something and sends messages. The GUI program shows the messages.
+(i) CLI. In the cli, a user just types commands such as "is_ready" and then this CLI program passes it to an engine.
+After that, the engine executes something and sends messages. The CLI program shows the messages.
 
 (ii) multi-engine case. Sometimes we want to make an engine battle other engine to evaluate their ratings. So, we support a multi-engine game.
 In the case, a user needs to specify how many engines are used and which engines are used.
