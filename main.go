@@ -25,29 +25,27 @@ Under the hood, we create a socket and need to use some famous system-call.
 
  */
 type Config struct {
-	Server ServerConfig
-	Engines MultiEnginesConfig
-	Cli CliConfig
+	Server ServerConfig `toml:"server"`
+	Engines MultiEnginesConfig `toml:"multiEngines"`
+	Cli CliConfig `toml:"cli"`
 }
 
 type ServerConfig struct {
-	Enable bool
-	Ip  string
-	Port  string
-	Path string
+	Enable bool `toml:"enable"`
+	Ip  string `toml:"ip"`
+	Port  string `toml:"port"`
+	Path string `toml:"path"`
 }
 
 type MultiEnginesConfig struct {
-	Enable bool
-	number int
-	Path []string
+	Enable bool `toml:"enable"`
+	Number int `toml:"number"`
+	Paths []string `toml:"paths"`
 }
 
-
-
 type CliConfig struct {
-	Enable bool
-	Path string
+	Enable bool `toml:"enable"`
+	Path string `toml:"path"`
 }
 
 
@@ -69,27 +67,16 @@ func main() {
 
 	if config.Server.Enable {
 		// communicate with TCP/IP server
+		fmt.Printf("server mode\n")
 
 	} else if config.Engines.Enable {
 		// play games with multiple engines used
+		fmt.Printf("multi-engine mode\n")
 
 	} else {
 		// CLI mode
-
+		fmt.Printf("cli mode\n")
 	}
-
-
-
-
-	fmt.Printf("Enable is :%t\n", config.Server.Enable)
-
-	fmt.Printf("multiEngine Enable is :%t\n", config.Engines.Enable)
-	fmt.Printf("Cli Enable is :%t\n", config.Cli.Enable)
-	fmt.Printf("Port is :%s\n", config.Server.Port)
-
-	fmt.Printf("%v\n", config.Server)
-	fmt.Printf("%v\n", config.Engines)
-	fmt.Printf("%v\n", config.Cli)
 	
 	stdin := bufio.NewScanner(os.Stdin)
 

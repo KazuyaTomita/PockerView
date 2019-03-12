@@ -5,17 +5,9 @@ port = "8888"
 path = "/tmp/engine"
 
 [multiEngines]
-enable = true
+enable = false
 number = 3
-
-[[multiEngines.path]]
-path = "/tmp/engine1"
-
-[[multiEngines.path]]
-path = "/tmp/engine2"
-
-[[multiEngines.path]]
-path = "/tmp/engine3"
+paths = ["/tmp/engine1", "/tmp/engine2", "/tmp/engine3"]
 
 [cli]
 enable = true
