@@ -7,6 +7,28 @@ import (
 	"os/exec"
 )
 
+type Config struct {
+	Server ServerConfig
+	Engines EnginesConfig
+}
+
+type ServerConfig struct {
+	Enable bool
+	Ip  string
+	Port  string
+}
+
+type EnginesConfig struct {
+	Enable bool
+	number int
+	Paths []EnginePath
+}
+
+type EnginePath struct {
+	Path string
+}
+
+
 func main() {
 	stdin := bufio.NewScanner(os.Stdin)
 
