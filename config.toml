@@ -1,0 +1,18 @@
+[server]
+enable = "false"
+ip = "10.0.0.1"
+port = "8888"
+
+[engines]
+enable = "false"
+number = "3"
+
+[[engines.path]]
+path = "/tmp/engine1"
+
+[[engines.path]]
+path = "/tmp/engine2"
+
+[[engines.path]]
+path = "/tmp/engine3"
+
