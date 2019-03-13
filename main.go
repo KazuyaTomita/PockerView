@@ -39,6 +39,7 @@ func main() {
 	} else if config.Engines.Enable {
 		// play games with multiple engines used
 		fmt.Printf("multi-engine mode\n")
+		panic("not implemented now. Can you send pull request?")
 	} else {
 		// CLI mode
 		fmt.Printf("cli mode\n")
