@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/BurntSushi/toml"
 	"os"
 	"os/exec"
 )
@@ -23,8 +24,60 @@ In the case, a user needs to specify how many engines are used and which engines
 Under the hood, we create a socket and need to use some famous system-call.
 
  */
+type Config struct {
+	Server ServerConfig `toml:"server"`
+	Engines MultiEnginesConfig `toml:"multiEngines"`
+	Cli CliConfig `toml:"cli"`
+}
+
+type ServerConfig struct {
+	Enable bool `toml:"enable"`
+	Ip  string `toml:"ip"`
+	Port  string `toml:"port"`
+	Path string `toml:"path"`
+}
+
+type MultiEnginesConfig struct {
+	Enable bool `toml:"enable"`
+	Number int `toml:"number"`
+	Paths []string `toml:"paths"`
+}
+
+type CliConfig struct {
+	Enable bool `toml:"enable"`
+	Path string `toml:"path"`
+}
+
+
 func main() {
-	// standard input to receive user's input
+	
+	var config Config
+	// read config file
+	_, parseErr := toml.DecodeFile("config.toml", &config)
+	if parseErr != nil {
+		panic(parseErr)
+	}
+
+	// check whether we can decide which mode is used
+	if (config.Server.Enable && config.Engines.Enable) ||
+		(config.Server.Enable && config.Cli.Enable) ||
+		(config.Cli.Enable && config.Engines.Enable) {
+		panic("not sure of which mode is used. please check config. Only single enable flag should be true.")
+	}
+
+	if config.Server.Enable {
+		// communicate with TCP/IP server
+		fmt.Printf("server mode\n")
+
+	} else if config.Engines.Enable {
+		// play games with multiple engines used
+		fmt.Printf("multi-engine mode\n")
+
+	} else {
+		// CLI mode
+		fmt.Printf("cli mode\n")
+	}
+	
 	stdin := bufio.NewScanner(os.Stdin)
 
 	// we prepare to execute an engine.

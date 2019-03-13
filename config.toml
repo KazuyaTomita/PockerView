@@ -1,18 +1,14 @@
 [server]
-enable = "false"
+enable = false
 ip = "10.0.0.1"
 port = "8888"
+path = "/tmp/engine"
 
-[engines]
-enable = "false"
-number = "3"
+[multiEngines]
+enable = false
+number = 3
+paths = ["/tmp/engine1", "/tmp/engine2", "/tmp/engine3"]
 
-[[engines.path]]
-path = "/tmp/engine1"
-
-[[engines.path]]
-path = "/tmp/engine2"
-
-[[engines.path]]
-path = "/tmp/engine3"
-
+[cli]
+enable = true
+path = "/tmp/engine"
