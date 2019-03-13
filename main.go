@@ -28,7 +28,7 @@ Under the hood, we create a socket and need to use some famous system-call.
 func main() {
 	
 	var config Config
-	ReadConfig(config)
+	ReadConfig(&config)
 
 	var inputScanner *bufio.Scanner
 
@@ -47,7 +47,7 @@ func main() {
 	}
 
 	// we prepare to execute an engine.
-	cmd := exec.Command("go", "run", "dummy_engine.go")
+	cmd := exec.Command(config.Cli.Path)
 	// pipe connecting to the engine's standard output
 	stdoutPipe, stdoutErr := cmd.StdoutPipe()
 	// pipe connecting to the engine's standard input
