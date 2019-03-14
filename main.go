@@ -38,6 +38,7 @@ func main() {
 
 	} else if config.Engines.Enable {
 		// play games with multiple engines used
+		// In this mode, we need to hold a full state of the game because no one send the game state.
 		fmt.Printf("multi-engine mode\n")
 		panic("not implemented now. Can you send pull request?")
 	} else {
