@@ -18,6 +18,11 @@ clean: ## remove build artifacts
 binary-osx: ## build executable for macOS
 	./scripts/osx
 
+.PHONY: binary-windows
+binary-windows: ## build executable for Windows
+	./scripts/windows
+
+
 .PHONY: fmt
 fmt: ## formatting
 	go list -f {{.Dir}} ./... | xargs gofmt -w -s -d
