@@ -8,15 +8,17 @@ help: ## show make targets
 
 .PHONY: binary
 binary: ## build executable for linux
-    @echo `@pwd`
 	./scripts/binary
 
+.PHONY: clean
+clean: ## remove build artifacts
+	rm -rf ./build/*
+
+
 .PHONY: fmt
-fmt:
+fmt: ## formatting
 	go list -f {{.Dir}} ./... | xargs gofmt -w -s -d
 
-vendor: vendor.conf ## check that vendor matches vendor.conf
-	# TODO we install libraries
 
 .PHONY: debug
 debug: ## for debug
