@@ -1,0 +1,12 @@
+FROM    golang:1.11.5-alpine
+
+RUN     apk add -U git make bash coreutils ca-certificates curl
+
+RUN     go get -u github.com/golang/dep/cmd/dep
+
+
+ENV     CGO_ENABLED=0 \
+        DISABLE_WARN_OUTSIDE_CONTAINER=1
+WORKDIR /go/src/PockerView
+CMD     sh
+COPY    . .
