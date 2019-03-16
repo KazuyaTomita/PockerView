@@ -53,7 +53,7 @@ binary-osx: build_cross_image ## build the source for macOS
 	$(DOCKER_RUN) $(CROSS_IMAGE_NAME) make $@
 
 .PHONY: dev
-dev: build_docker_image ## start a build container in interactive mode for in-container development
+dev: build_docker_image ## start a build container for in-container development
 	$(DOCKER_RUN) -it \
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		$(DEV_DOCKER_IMAGE_NAME) $(DOCKER_SHELL)

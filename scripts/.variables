@@ -16,5 +16,5 @@ export LDFLAGS="\
 
 GOOS="${GOOS:-$(go env GOHOSTOS)}"
 GOARCH="${GOARCH:-$(go env GOHOSTARCH)}"
-export TARGET="build/poker-view-$GOOS-$GOARCH"
+export TARGET="build/pocker-view-$GOOS-$GOARCH"
 export SOURCE=""

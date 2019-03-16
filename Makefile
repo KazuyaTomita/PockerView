@@ -14,6 +14,9 @@ binary: ## build executable for linux
 clean: ## remove build artifacts
 	rm -rf ./build/*
 
+.PHONY: binary-osx
+binary-osx: ## build executable for macOS
+	./scripts/osx
 
 .PHONY: fmt
 fmt: ## formatting
