@@ -16,7 +16,7 @@ export GOARCH=amd64
 TARGET="build/pocker-view-$GOOS-$GOARCH"
 
 echo "Generating windows resources"
-go generate ./cli/winresources
+go generate ./winresources
 
 echo "Building $TARGET"
 go build -o "${TARGET}" --ldflags "${LDFLAGS}" "${SOURCE}"
