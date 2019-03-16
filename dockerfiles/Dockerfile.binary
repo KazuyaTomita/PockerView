@@ -4,5 +4,5 @@ RUN     apk add -U git bash coreutils gcc musl-dev
 
 ENV     CGO_ENABLED=0 \
         DISABLE_WARN_OUTSIDE_CONTAINER=1
-WORKDIR /go/src
+WORKDIR /go/src/PockerView
 CMD     ./scripts/binary
