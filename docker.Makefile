@@ -63,8 +63,11 @@ set-vendor: build_docker_image ## set vendor and Gopkg files
 	$(DOCKER_RUN) -it $(DEV_DOCKER_IMAGE_NAME) dep init
 
 .PHONY: update-vendor
-update-vendor: build_docker_image ## update vendor and Gopkg files
+update-vendor: build_docker_image Gopkg.toml ## update vendor and Gopkg files
 	$(DOCKER_RUN) -it $(DEV_DOCKER_IMAGE_NAME) dep ensure
+
+Gopkg.toml: set-vendor
+
 
 .PHONY: fmt
 fmt: ## run gofmt
