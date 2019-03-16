@@ -3,7 +3,7 @@
 #
 
 # Overridable env vars
-DOCKER_MOUNTS ?= -v "$(CURDIR)":/go/src
+DOCKER_MOUNTS ?= -v "$(CURDIR)":/go/src/PockerView
 DOCKER_SHELL ?= ash
 DOCKER_CONTAINER_NAME ?=
 DOCKER_GO_BUILD_CACHE ?= y
@@ -58,14 +58,17 @@ dev: build_docker_image ## start a build container in interactive mode for in-co
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		$(DEV_DOCKER_IMAGE_NAME) $(DOCKER_SHELL)
 
+.PHONY: set-vendor
+set-vendor: build_docker_image ## set vendor and Gopkg files
+	$(DOCKER_RUN) -it $(DEV_DOCKER_IMAGE_NAME) dep init
+
+.PHONY: update-vendor
+update-vendor: build_docker_image ## update vendor and Gopkg files
+	$(DOCKER_RUN) -it $(DEV_DOCKER_IMAGE_NAME) dep ensure
+
 .PHONY: fmt
 fmt: ## run gofmt
 	$(DOCKER_RUN) $(DEV_DOCKER_IMAGE_NAME) make fmt
-
-.PHONY: vendor
-vendor: build_docker_image vendor.conf ## download dependencies listed in vendor.conf
-	$(DOCKER_RUN) -it $(DEV_DOCKER_IMAGE_NAME) make vendor
-
 
 .PHONY: help
 help: ## print this help
