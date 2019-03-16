@@ -11,4 +11,4 @@ paths = ["/tmp/engine1", "/tmp/engine2", "/tmp/engine3"]
 
 [cli]
 enable = true
-path = "/tmp/engine"
+path = "./dummy_engine"
