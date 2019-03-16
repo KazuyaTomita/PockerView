@@ -30,7 +30,7 @@ type CliConfig struct {
 
 func ReadConfig(config *Config) {
 	// read config file
-	_, parseErr := toml.DecodeFile("config.toml", config)
+	_, parseErr := toml.DecodeFile("./config.toml", config)
 	if parseErr != nil {
 		panic(parseErr)
 	}
