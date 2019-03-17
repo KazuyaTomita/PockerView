@@ -34,7 +34,7 @@ build_binary_native_image:
 DOCKER_RUN_NAME_OPTION := $(if $(DOCKER_CONTAINER_NAME),--name $(DOCKER_CONTAINER_NAME),)
 DOCKER_RUN := docker run --rm $(ENVVARS) $(DOCKER_MOUNTS) $(DOCKER_RUN_NAME_OPTION)
 
-binary: build_binary_native_image ## build the source
+binary: build_binary_native_image Gopkg.toml ## build the source
 	$(DOCKER_RUN) $(BINARY_NATIVE_IMAGE_NAME)
 
 build: binary ## alias for binary
@@ -45,11 +45,11 @@ clean: build_docker_image ## clean build artifacts
 	docker volume rm -f $(CACHE_VOLUME_NAME)
 
 .PHONY: binary-windows
-binary-windows: build_cross_image ## build the source for Windows
+binary-windows: build_cross_image Gopkg.toml ## build the source for Windows
 	$(DOCKER_RUN) $(CROSS_IMAGE_NAME) make $@
 
 .PHONY: binary-osx
-binary-osx: build_cross_image ## build the source for macOS
+binary-osx: build_cross_image Gopkg.toml ## build the source for macOS
 	$(DOCKER_RUN) $(CROSS_IMAGE_NAME) make $@
 
 .PHONY: dev
