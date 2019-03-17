@@ -7,3 +7,14 @@ Now we are thinking PockerView supports three type of uses cases.
 + multiple engines games
 
 Note: In these three uses cases, remote server support will have some protocols.
+
+### BUILD
+You have to set your engine binary and write some configs in config.toml.
+
+``make -f docker.Makefile binary`` for linux.
+
+``make -f docker.Makefile binary-osx`` for macOS.
+
+``make -f docker.Makefile binary-windows`` for windows.
+
+
