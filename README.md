@@ -1,15 +1,23 @@
-# PockerView
+PockerView
+====
 
-CUI program which supports UPI(Universal Porker Interface) protocol. see (this pdf)[https://cdn.shopify.com/s/files/1/0769/9693/files/UPI-documentation_e9050fc5-e6e6-4f37-8611-04819b636333.pdf]
+CUI program which supports modified UPI(Universal Porker Interface) protocol.
+
+## Description
+When you making a poker AI, minding an interface part is meaningless. Probably you want to concentrate an engine itself.
+So, you need something which absorbs the difference of protocols of interface parts. This CUI program does it.
+
 Now we are thinking PockerView supports three type of uses cases.
 + CUI through standart input
-+ Remote server which supports a certain protocol
++ Remote server which supports ACPC
 + multiple engines games
 
-Note: In these three uses cases, remote server support will have some protocols.
+
+## Usage
+First, you prepare a binary of an engine.
+And then you can build this program after writing some configs in config.toml. 
 
 ### BUILD
-You have to set your engine binary and write some configs in config.toml.
 
 ``make -f docker.Makefile binary`` for linux.
 
@@ -17,4 +25,17 @@ You have to set your engine binary and write some configs in config.toml.
 
 ``make -f docker.Makefile binary-windows`` for windows.
 
+## Requirement
+Docker
+
+## Contribution
+Pull Request is welcome!
+You can prepare a development environment by ``make -f docker.Makefile dev``.
+
+## Licence
+MIT
+
+## Author
+
+[KazuyaTomita](https://github.com/KazuyaTomita)
 
